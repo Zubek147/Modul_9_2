@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kalkulator Walut</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h2>Kalkulator Walut</h2>
+        <form method="POST">
+            <label for="currency">Wybierz kod waluty:</label>
+            <select name="currency" id="currency">
+                {% for code in currency_codes %}
+                <option value="{{ code }}">{{ code }}</option>
+                {% endfor %}
+            </select>
+            <label for="amount">Ile chcesz kupić:</label>
+            <input type="number" name="amount" id="amount" placeholder="Wprowadź ilość" required>
+            <button type="submit">Przelicz</button>
+        </form>
+        {% if result %}
+        <div id="result">{{ result }}</div>
+        {% endif %}
+    </div>
+</body>
+</html>
