@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kalkulator Walut</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h2>Kalkulator Walut</h2>
+        <form method="POST">
+            <label for="currency">Wybierz kod waluty:</label>
+            <select name="currency" id="currency">
+                {% if currency_codes %}
+                    {% for code in currency_codes %}
+                        <option value="{{ code }}">{{ code }}</option>
+                    {% endfor %}
+                {% else %}
+                    <option value="" disabled>No currency data available. Download data first.</option>
+                {% endif %}
+            </select>
+            
+            <!-- Dodane warunki dla pola "Podaj ilość" -->
+            {% if currency_codes %}
+                <label for="amount">Ile chcesz kupić:</label>
+                <input type="number" name="amount" id="amount" placeholder="Wprowadź ilość" required>
+            {% else %}
+                <p>Dane walut nie są dostępne. Pobierz dane przed przeliczeniem.</p>
+            {% endif %}
+
+            <button type="submit" {% if not currency_codes %} disabled {% endif %}>Przelicz</button>
+        </form>
+
+        <form method="POST" action="{{ url_for('download_data') }}">
+            <button type="submit">Pobierz Dane</button>
+        </form>
+
+        {% if result %}
+        <div id="result">{{ result }}</div>
+        {% endif %}
+
+        {% if date %}
+        <p>Aktualny kurs na dzień: {{ date }}</p>
+        {% endif %}
+    </div>
+</body>
+</html>

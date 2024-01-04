@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kalkulator Walut - Pobierz lub Aktualizuj Dane</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h2>Kalkulator Walut</h2>
+        <form method="POST">
+            {% if show_update_button %}
+                <button type="submit" name="action" value="update">Aktualizuj Dane</button>
+            {% else %}
+                <button type="submit" name="action" value="download">Pobierz Dane</button>
+            {% endif %}
+        </form>
+
+        {% if date %}
+            <p>Ostatnia aktualizacja danych: {{ date }}</p>
+        {% endif %}
+    </div>
+</body>
+</html>
